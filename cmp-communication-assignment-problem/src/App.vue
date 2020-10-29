@@ -1,11 +1,11 @@
 <template>
   <section>
     <header>
-      <h1>My Friends</h1>
+      <h1>User info</h1>
     </header>
-    <new-friend @add-contact="addContact"></new-friend>
+    <user-data @add-user="addUser"></user-data>>
     <ul>
-      <friend-contact @delete="deleteContact" :friend="friend" v-for="friend in friends" :key="friend.id"></friend-contact>
+      <active-user v-for="user in users" :key="user.id" :username="user.name" :userage="user.age"></active-user>
     </ul>
   </section>
 </template>
@@ -14,47 +14,41 @@
 export default {
   data() {
     return {
-      friends: [
+      users: [
         {
-          id: 'manual',
-          name: 'Manual Lorenz',
-          phone: '01234567891',
-          email: 'manuel@mail.com'
+          id: "manual",
+          name: "Manual Lorenz",
+          age: 19
         },
         {
-          id: 'julie',
-          name: 'Julie Jones',
-          phone: '0987645222',
-          email: 'julie@mail.com'
+          id: "julie",
+          name: "Julie Jones",
+          age: 20
         }
       ]
-    }
+    };
   },
   methods: {
-    addContact(name, phone, email) {
-      const newFriendContact = {
-        id: new Date().toISOString(),
+    addUser(name,age) {
+      const newUser = {
+        id:  new Date().toISOString(),
         name: name,
-        phone: phone,
-        email: email
-      };
-      this.friends.push(newFriendContact);
-    },
-    deleteContact(friendId) {
-      this.friends = this.friends.filter((friend) => friend.id !== friendId)
+        age: age
+      }
+      this.users.push(newUser);
     }
   }
-}
+};
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Jost&display=swap");
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: 'Jost', sans-serif;
+  font-family: "Jost", sans-serif;
 }
 
 body {
@@ -127,5 +121,4 @@ header {
 #app form div {
   margin: 1rem 0;
 }
-
 </style>

@@ -6,12 +6,14 @@
       <li><strong>Phone:</strong> {{ friend.phone }}</li>
       <li><strong>Email:</strong> {{ friend.email }}</li>
     </ul>
+    <button @click="$emit('delete', friend.id)">Delete</button>
   </li>
 </template>
 
 <script>
 export default {
   props: ['friend'],
+  emits: ['delete'],
   data() {
     return {
       showDetail: false
@@ -20,7 +22,7 @@ export default {
   methods: {
     toggleDetails() {
       this.showDetail = !this.showDetail;
-    }
+    },
   }
 }
 </script>
