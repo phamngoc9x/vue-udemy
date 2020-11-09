@@ -23,7 +23,8 @@ export default {
       type: String,
       required: false
     }
-  }
+  },
+  emits:['close']
 }
 </script>
 
