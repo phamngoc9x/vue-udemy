@@ -21,13 +21,39 @@ const router = createRouter({
     { path:'/users', components: {
         default: UsersList,
         footer: UsersFooter
-    } },
+      },
+      beforeEnter(to, from, next) {
+        console.log('user beforeEnter');
+        console.log(to, from);
+        next();
+      } 
+    },
     
     { path: '/:noteFound(.*)', component: NotFound }
   ],
-  linkActiveClass: 'active'
+  linkActiveClass: 'active',
+  scrollBehavior(_, _2, savedPosition) {
+    // console.log('tesst' + to, from, savedPosition);
+    if(savedPosition) {
+      return savedPosition;
+    }
+    return {
+      left: 0, top: 0
+    }
+  }
 })
 // console.log(router)
+
+router.beforeEach(function(to, from, next) {
+  console.log('Global beforeEach')
+  console.log(to, from)
+  // if(to.name === 'team-members') {
+  //   next();
+  // } else {
+  //   next({name: 'team-members', params: {teamId: 't2'}})
+  // }
+  next()
+})
 
 const app = createApp(App)
 
