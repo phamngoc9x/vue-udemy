@@ -1,8 +1,15 @@
 <template>
-  <button @click="confirmInput">Confirm</button>
-  <ul>
-    <user-item v-for="user in users" :key="user.id" :name="user.fullName" :role="user.role"></user-item>
-  </ul>
+  <div>
+    <button @click="confirmInput">Confirm</button>
+    <ul>
+      <user-item
+        v-for="user in users"
+        :key="user.id"
+        :name="user.fullName"
+        :role="user.role">
+      </user-item>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -19,6 +26,14 @@ export default {
       this.$router.push('/teams');
       // this.$router
     }
+  },
+  beforeRouterEnter(to,from,next) {
+    console.log('User list beforeRouterEnter');
+    console.log(to, from);
+    next()
+  },
+  unmounted() {
+    console.log('unmounted');
   }
 };
 </script>

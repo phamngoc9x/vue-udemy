@@ -26,7 +26,7 @@ const router = createRouter({
         console.log('user beforeEnter');
         console.log(to, from);
         next();
-      } 
+      }
     },
     
     { path: '/:noteFound(.*)', component: NotFound }
