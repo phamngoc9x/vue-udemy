@@ -5,12 +5,18 @@
       <button @click="animateBlock">Animate</button>
     </div>
     <div class="container">
-      <transition>
+      <transition name="para">
         <p v-if="paraIsVisible">This is only sometimes visible...</p>
       </transition>
       <button @click="toggleParagraph">Toggle Paragraph</button>
     </div>
-    <base-modal @close="hideDialog" v-if="dialogIsVisible">
+    <div class="container">
+      <transition name="fade" mode="out-in">
+        <button @click="showUsers" v-if="!usersAreVisible">Show Users </button>
+        <button @click="hideUsers" v-else >Hide Users</button>
+      </transition>
+    </div>
+    <base-modal @close="hideDialog" :open="dialogIsVisible">
       <p>This is a test dialog!</p>
       <button @click="hideDialog">Close it!</button>
     </base-modal>
@@ -26,7 +32,8 @@ export default {
     return {
       dialogIsVisible: false,
       animatedBlock: false,
-      paraIsVisible: false
+      paraIsVisible: false,
+      usersAreVisible: false
     };
   },
   methods: {
@@ -41,6 +48,12 @@ export default {
     },
     hideDialog() {
       this.dialogIsVisible = false;
+    },
+    showUsers() {
+      this.usersAreVisible = true;
+    },
+    hideUsers() {
+      this.usersAreVisible = false;
     },
   },
 };
@@ -93,32 +106,70 @@ button:active {
   animation: slide-fade 0.3s ease-out forwards;
 }
 
-.v-enter-from {
+.para-enter-from {
+  /* opacity: 0;
+  transform: translateY(-30px); */
+}
+
+.para-enter-active {
+  animation: slide-scale 0.3s ease-out;
+}
+
+.para-enter-to {
+  /* opacity: 1;
+  transform: translateY(0); */
+}
+
+.para-leave-from {
+  /* opacity: 1;
+  transform: translateY(0); */
+}
+
+.para-leave-active {
+  animation: slide-scale 0.3s ease-out;
+}
+
+.para-leave-to {
+  /* opacity: 0;
+  transform: translateY(-30px); */
+}
+
+.modal-enter-from {
+  
+}
+
+.modal-enter-active {
+  animation: modal 0.3 ease-out;
+}
+
+
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
-  transform: translateY(-30px);
+}
+.fade-enter-active {
+  transition: opacity 0.3s ease-out;
 }
 
-.v-enter-active {
-  transition: all 0.3s ease-out;
+.fade-leave-active {
+  transition: opacity 0.3s ease-in;
 }
 
-.v-enter-to {
+.fade-enter-to,
+.fade-leave-from {
   opacity: 1;
-  transform: translateY(0);
 }
 
-.v-leave-from {
-  opacity: 1;
-  transform: translateY(0);
-}
+@keyframes slide-scale {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px) scale(1.3);
+  }
 
-.v-leave-active {
-  transition: all 0.3s ease-out;
-}
-
-.v-leave-to {
-  opacity: 0;
-  transform: translateY(-30px);
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
 }
 
 @keyframes slide-fade {
@@ -132,6 +183,17 @@ button:active {
 
   100% {
     transform: translateX(-150px) scale(1);
+  }
+}
+
+@keyframes modal {
+  from {
+    opacity: 0;
+    transform: translateX(-50px) scale(0.9);
+  }
+
+  to {
+    transform: translateX(0) scale(1);
   }
 }
 </style>
