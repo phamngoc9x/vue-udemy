@@ -14,10 +14,12 @@ export default {
       body: JSON.stringify(coachData),
     });
 
-    // const reponseData = await response.json();
+    // const responseData = await response.json();
 
     if(!response.ok) {
       // error
+      // const error = new Error(responseData.message || 'Failed to fetch!');
+      // throw error;
     }
 
     context.commit('registerCoach', {
@@ -30,22 +32,24 @@ export default {
       `https://vue-http-demo-df3df-default-rtdb.firebaseio.com/coaches.json`
     );
 
-    const reponseData = await response.json();
+    const responseData = await response.json();
 
     if(!response.ok) {
       // error
+      const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
     }
 
     const coaches = [];
 
-    for (const key in reponseData) {
+    for (const key in responseData) {
       const coach = {
         id: key,
-        firstName: reponseData[key].firstName,
-        lastName: reponseData[key].lastName,
-        description: reponseData[key].description,
-        hourlyRate: reponseData[key].hourlyRate,
-        areas: reponseData[key].areas,
+        firstName: responseData[key].firstName,
+        lastName: responseData[key].lastName,
+        description: responseData[key].description,
+        hourlyRate: responseData[key].hourlyRate,
+        areas: responseData[key].areas,
       };
       coaches.push(coach);
     }
